@@ -10,40 +10,42 @@
           rel="stylesheet" media="screen" />
     <script type="text/javascript" src="http://cdn.jsdelivr.net/webjars/jquery/1.11.1/jquery.min.js"
             th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/3.1.1/js/bootstrap.min.js}"></script>
 </head>
 <body>
 <section id="derp">
     <div class="container">
 
-        <div class="row col-md-6 col-md-offset-2 custyle">
-            <a th:href="@{/derp/invite}" class="btn btn-primary btn-xs pull-right"><b>+</b>Invite</a>
+        <div class="row col-md-6 col-md-offset-3 custyle">
+            <div class="row" style="margin-top: 5px;">
+                <a th:href="@{/derp/invite}" class="btn btn-primary btn-md pull-left"><span class="glyphicon glyphicon-plus"></span>Invite</a>
+                <a th:href="@{/logout}" class="btn btn-warning btn-md pull-right">
+                    <span class="glyphicon glyphicon-log-out"></span>Log Out
+                </a>
+            </div>
+
+            <hr />
+            <div th:if="${derpSent == true}" class="alert alert-dismissible alert-success " th:text="'You just derpped ' + ${drepped}">Derp Successfull </div>
+            <div th:if="${contactRemoved == true}" class="alert alert-dismissible alert-success " th:text="'You just removed ' + ${drepped}">Delete Successfull </div>
             <table  th:if="${noContact == false}" class="table table-striped custab">
                 <thead>
                 <tr>
                     <th>User Email</th>
-                    <!--<th>Parent ID</th>-->
                     <th class="text-center">Action</th>
                 </tr>
                 </thead>
-                <tr th:each="c : ${contacts}">
+                <tr th:each="c, stat : ${contacts}">
 
-                    <td th:text="${c}">1</td>
-                    <!--<td>News Cate</td>-->
+                    <td th:text="${c.getEmail()}">1</td>
                     <td class="text-center">
 
-                        <form method="post" action="#" th:action="@{/derp/send}" th:object="${contact}">
-                            <input type="hidden" th:field="*{email}"  value="${c}" />
-                            <button type="submit" class="btn btn-info btn-xs" >
+                            <a th:href="@{/derp/send(email=${c.getEmail()})}" class="btn btn-info btn-xs" >
                                 <span class="glyphicon glyphicon-edit"></span>Derp
-                            </button>
-                        </form>
-
-                        <form method="post" action="#" th:action="@{/derp/delete}" th:object="${contact}" style="width:auto;float: left;">
-                            <input type="hidden" th:field="*{email}"  value="${c}" />
-                            <button type="submit" class="btn btn-danger btn-xs" >
+                            </a>
+                            <a th:href="@{/derp/delete(email=${c.getEmail()})}" class="btn btn-danger btn-xs" >
                                 <span class="glyphicon glyphicon-remove"></span>Delete
-                            </button>
-                        </form>
+                            </a>
 
                     </td>
                 </tr>

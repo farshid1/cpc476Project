@@ -32,7 +32,10 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(Model model) {
+    public String index(Model model, HttpSession session) {
+        if (session.getAttribute("email") != null) {
+            return "redirect:/derp";
+        }
         model.addAttribute("user", new User());
         return "index";
     }
@@ -65,13 +68,14 @@ public class AuthenticationController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(@ModelAttribute User user, Model model)
     {
-//        //System.out.println(user.getUsername());
-//        if (session.getAttribute("username") != null)
-
-        //userRepository.save(user);
         this.userDatabase.put(user.getEmail(), user.getPassword());
-
         return "index";
 
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
     }
 }
