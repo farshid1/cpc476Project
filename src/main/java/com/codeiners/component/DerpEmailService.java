@@ -19,8 +19,8 @@ public class DerpEmailService implements EmailService {
         email.setHostName("localhost");
         email.setSmtpPort(2226);
         email.setFrom(sendFrom);
-        email.setSubject("DERP Invite");
-        email.setMsg("Please join me on Derp for a derpy experience");
+        email.setSubject(subject);
+        email.setMsg(message);
         email.addTo(sendTo);
         email.send();
     }
