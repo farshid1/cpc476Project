@@ -3,12 +3,14 @@ package com.codeiners.auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -41,10 +43,10 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@ModelAttribute User user, Model model, HttpSession session)
+    public String login(@Valid User user, BindingResult bindingResult, Model model, HttpSession session)
     {
-//        //System.out.println(user.getUsername());
-//        if (session.getAttribute("username") != null)
+        if (bindingResult.hasErrors()) return "index";
+
         if (user.getEmail() == null || user.getPassword() == null ||
                 !userDatabase.containsKey(user.getEmail()) ||
                 !user.getPassword().equals(userDatabase.get(user.getEmail())))
@@ -66,8 +68,10 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(@ModelAttribute User user, Model model)
+    public String register(@Valid User user, BindingResult bindingResult, Model model)
     {
+        if (bindingResult.hasErrors()) return "register";
+
         this.userDatabase.put(user.getEmail(), user.getPassword());
         return "index";
 

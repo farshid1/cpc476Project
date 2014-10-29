@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import java.util.Arrays;
 
@@ -22,7 +21,6 @@ import java.util.Arrays;
 @EnableAutoConfiguration
 @Configuration
 @ComponentScan
-@EnableMongoRepositories
 //@PropertySource("application.properties")
 public class App 
 {

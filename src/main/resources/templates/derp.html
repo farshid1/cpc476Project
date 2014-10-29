@@ -27,7 +27,7 @@
 
             <hr />
             <div th:if="${derpSent == true}" class="alert alert-dismissible alert-success " th:text="'You just derpped ' + ${drepped}">Derp Successfull </div>
-            <div th:if="${contactRemoved == true}" class="alert alert-dismissible alert-success " th:text="'You just removed ' + ${drepped}">Delete Successfull </div>
+            <div th:if="${contactRemoved == true}" class="alert alert-dismissible alert-warning " th:text="'You just removed ' + ${drepped}">Delete Successfull </div>
             <table  th:if="${noContact == false}" class="table table-striped custab">
                 <thead>
                 <tr>
